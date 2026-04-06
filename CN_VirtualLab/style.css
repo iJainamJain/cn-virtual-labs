@@ -1,0 +1,344 @@
+:root {
+    /* Core Branding */
+    --primary: #003366;
+    --primary-dark: #001a33;
+    --accent: #ffcc00;
+    --accent-hover: #ffdb4d;
+    --bg-light: #f0f4f8;
+    --white: #ffffff;
+    --border: #ccd6e0;
+    
+    /* Typography & UI */
+    --text-main: #1a202c;
+    --text-muted: #4a5568;
+    --success: #2e7d32;
+    --error: #d32f2f;
+    
+    /* Specialized Colors for Exp 6 */
+    --terminal-bg: #1a202c;
+    --terminal-green: #48bb78;
+    --eth-blue: #3182ce;
+    --x25-red: #e53e3e;
+    --tr-green: #38a169;
+    
+    /* Elevation */
+    --shadow-md: 0 8px 25px rgba(0,0,0,0.1);
+    --shadow-lg: 0 15px 40px rgba(0,0,0,0.18);
+}
+
+/* --- Global Reset & Base --- */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.hidden { display: none !important; }
+
+#main-lab {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+}
+
+/* --- Packet & Connection Animations --- */
+@keyframes packetFlow {
+    0% { transform: scale(1); filter: drop-shadow(0 0 2px var(--accent)); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 10px var(--accent)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--accent)); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.packet-pulse {
+    animation: packetFlow 1s infinite ease-in-out;
+}
+
+/* --- Improved Main Header --- */
+.main-header {
+    background: linear-gradient(to right, var(--primary-dark), var(--primary));
+    color: white;
+    padding: 1.2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 100;
+    flex-shrink: 0;
+    border-bottom: 4px solid var(--accent);
+}
+
+.header-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-section { display: flex; flex-direction: column; gap: 2px; }
+
+.inst-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.dept-name {
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+.title-section h1 {
+    margin: 5px 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header-line {
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* --- Layout Container --- */
+.container { 
+    display: flex; 
+    flex: 1; 
+    overflow: hidden; 
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background-color: var(--white);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 50;
+}
+
+.sidebar ul { list-style: none; padding: 10px 0; margin: 0; }
+
+.sidebar li {
+    padding: 20px 30px;
+    cursor: pointer;
+    border-bottom: 1px solid #edf2f7;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.sidebar li:hover {
+    background-color: #f7fafc;
+    color: var(--primary);
+    padding-left: 38px;
+}
+
+.sidebar li.active {
+    background-color: #f0f7ff;
+    color: var(--primary);
+    border-left: 6px solid var(--primary);
+}
+
+/* --- Content Area --- */
+.content-area {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: var(--bg-light);
+    scroll-behavior: smooth;
+}
+
+/* --- Experiment Grid --- */
+.exp-scroll-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 30px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.exp-card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 20px;
+    border-top: 10px solid var(--primary);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+}
+
+.exp-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.exp-card h3 { 
+    margin-top: 0; 
+    color: var(--primary); 
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.exp-card p { 
+    color: var(--text-muted); 
+    line-height: 1.7; 
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.start-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: 0.2s;
+    box-shadow: 0 4px 12px rgba(0,51,102,0.15);
+}
+
+.start-btn:hover { 
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,51,102,0.25);
+}
+
+/* --- Experiment Interface Tabs --- */
+.exp-header {
+    margin-bottom: 30px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.tab-bar {
+    display: flex;
+    gap: 8px;
+    border-bottom: 4px solid var(--primary);
+    margin-top: 20px;
+}
+
+.tab-btn {
+    padding: 14px 35px;
+    cursor: pointer;
+    background: #e2e8f0;
+    border: none;
+    border-radius: 12px 12px 0 0;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-muted);
+    transition: 0.2s;
+}
+
+.tab-btn:hover { background: #cbd5e0; }
+.tab-btn.active { background: var(--primary); color: var(--white); }
+
+/* --- Simulation Specific Elements --- */
+.simulator-wrapper {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    animation: fadeIn 0.6s ease;
+}
+
+#wireshark-view {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: var(--terminal-bg);
+    color: var(--terminal-green);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+
+/* --- Footer --- */
+.main-footer {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+    border-top: 2px solid var(--accent);
+    flex-shrink: 0;
+}
+
+/* --- Landing Page --- */
+.landing-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000; text-align: center;
+}
+
+.enter-btn {
+    padding: 22px 65px; 
+    font-size: 1.4rem; 
+    background: var(--accent); 
+    color: var(--primary-dark);
+    border: none; 
+    cursor: pointer; 
+    font-weight: 800; 
+    border-radius: 50px; 
+    transition: 0.3s;
+    box-shadow: 0 10px 25px rgba(255, 204, 0, 0.3);
+}
+
+.enter-btn:hover { 
+    background: var(--white); 
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.4);
+}
+
+/* --- Scrollbars --- */
+.content-area::-webkit-scrollbar { width: 10px; }
+.content-area::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
+.content-area::-webkit-scrollbar-track { background: var(--bg-light); }
+
+/* --- Typography Helpers --- */
+h2 {
+    font-size: 2.4rem;
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-weight: 800;
+    border-bottom: 5px solid var(--accent);
+    padding-bottom: 10px;
+}
+
+.theory-content {
+    line-height: 1.8;
+    font-size: 1.15rem;
+    color: var(--text-main);
+}

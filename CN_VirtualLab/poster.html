@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Poster - CN Virtual Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --vit-blue: #003366;
+            --vit-gold: #ffcc00;
+            --vit-navy: #001a33;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --bg-accent: #f0f7ff;
+        }
+
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e2e8f0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* A4 dimensions: 210mm x 297mm */
+        .poster-canvas {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            box-shadow: 0 15px 60px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .poster-header {
+            background: linear-gradient(135deg, var(--vit-navy) 0%, var(--vit-blue) 100%);
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+            border-bottom: 6px solid var(--vit-gold);
+            position: relative;
+        }
+
+        .inst-name {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--vit-gold);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .dept-name {
+            font-size: 11px;
+            opacity: 0.9;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .poster-header h1 {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-accent-line {
+            width: 60px; 
+            height: 4px; 
+            background: var(--vit-gold); 
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding: 20px 35px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Increased gap to fill vertical space */
+        }
+
+        .section-title {
+            color: var(--vit-blue);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 15px;
+            text-transform: uppercase;
+            border-left: 5px solid var(--vit-gold);
+            padding-left: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Top Split */
+        .top-split {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 20px;
+        }
+
+        .abstract-container {
+            background: var(--bg-accent);
+            border: 1px solid #bae6fd;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 10px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            text-align: justify;
+        }
+
+        .home-screen-space {
+            border: 3px solid var(--vit-blue);
+            border-radius: 13px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .home-screen-space img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+
+
+        /* ENHANCED Experiment Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+
+        .card i {
+            color: var(--vit-blue);
+            font-size: 20px;
+            background: var(--bg-accent);
+            min-width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .card-text h4 {
+            margin: 0 0 4px 0;
+            font-size: 13px;
+            color: var(--vit-blue);
+            font-weight: 800;
+        }
+
+        .card-text p {
+            margin: 0;
+            font-size: 10.5px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        /* Methodology */
+        .flow-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            text-align: center;
+        }
+
+        .flow-step {
+            padding: 12px;
+            background: #fff;
+            border: 1.5px dashed var(--vit-blue);
+            border-radius: 10px;
+        }
+
+        .flow-step i { color: var(--vit-gold); font-size: 24px; margin-bottom: 6px; }
+        .flow-step h5 { margin: 0 0 4px 0; font-size: 11px; color: var(--vit-blue); font-weight: 800; }
+        .flow-step p { margin: 0; font-size: 10px; color: var(--text-light); }
+
+        /* Elements */
+        .elements-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 5px 0;
+        }
+
+        .element-pill {
+            background: var(--vit-navy);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 10.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .element-pill i { color: var(--vit-gold); font-size: 10px; }
+
+        /* Technical Foundation */
+        .tech-foundation-box {
+            background: linear-gradient(to right, var(--vit-navy), var(--vit-blue));
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: white;
+            border-bottom: 4px solid var(--vit-gold);
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tech-item i { font-size: 22px; color: var(--vit-gold); }
+        .tech-item span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* FOOTER AREA */
+        .footer-section {
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: 1.1fr 1.6fr 1fr;
+            align-items: center;
+            gap: 20px;
+            min-height: 160px;
+        }
+
+        .viva-block h4 {
+            margin: 0 0 8px 0; 
+            color: var(--vit-blue); 
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .viva-block ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 10.5px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .team-block {
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            padding: 0 15px;
+            text-align: center;
+        }
+
+        .team-block h4 {
+            margin: 0 0 10px 0;
+            color: var(--vit-blue);
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .member-mini {
+            font-size: 10.5px;
+            text-align: center;
+        }
+
+        .member-mini strong { color: var(--vit-navy); display: block; margin-bottom: 2px; }
+        .member-mini span { color: var(--text-light); font-size: 9px; }
+
+        .qr-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-placeholder {
+            width: 100px;
+            height: 100px;
+            border: 2px dashed var(--vit-blue);
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .qr-placeholder::after {
+            content: 'SCAN BACK';
+            text-align: center;
+            font-size: 8px;
+            font-weight: 800;
+            color: var(--vit-blue);
+        }
+
+        .qr-label {
+            margin-top: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--vit-blue);
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .poster-canvas { box-shadow: none; border: none; width: 100%; height: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster-canvas">
+        <!-- HEADER -->
+        <header class="poster-header">
+            <span class="inst-name">Vidyalankar Institute of Technology, Wadala</span>
+            <span class="dept-name">Department of Electronics and Computer Science</span>
+            <h1>Computer Network Virtual Lab</h1>
+            <div class="header-accent-line"></div>
+        </header>
+
+        <main class="main-content">
+            
+            <!-- PROJECT ABSTRACT & INTERFACE -->
+            <div class="top-split">
+                <div class="section">
+                    <div class="section-title"><i class="fa-solid fa-microscope"></i> Project Abstract</div>
+                    <div class="abstract-container">
+                        Networking protocols can feel like a "black box" until you see them in action. This Virtual Lab brings classroom theories to life through interactive, real-time animations. We’ve created a hardware-free space where students can dive into signal analysis and architecture, experimenting freely and learning at their own pace. It’s more than just a simulation—it’s about making complex concepts finally click.
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-title"><i class="fa-solid fa-desktop"></i> Application UI</div>
+                    <div class="home-screen-space">
+                        <img src="homescreen.png" alt="Lab Interface Preview">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ENHANCED LABORATORY MODULES -->
+            <div class="section">
+                <div class="section-title"><i class="fa-solid fa-flask"></i> Laboratory Experiments</div>
+                <div class="grid-container">
+                    <!-- Experiment 1 -->
+                    <div class="card">
+                        <i class="fa-solid fa-wave-square"></i>
+                        <div class="card-text">
+                            <h4>01. Line Encoding Schemes</h4>
+                            <p>Study digital transition rules (NRZ, AMI, Manchester) and DC component mitigation through a real-time oscilloscope signal analyzer.</p>
+                        </div>
+                    </div>
+                    <!-- Experiment 2 -->
+                    <div class="card">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        <div class="card-text">
+                            <h4>02. Stop & Wait ARQ</h4>
+                            <p>Interactive flow control simulation visualizing retransmission logic upon Frame or Acknowledgment (ACK) loss scenarios.</p>
+                        </div>
+                    </div>
+                    <!-- Experiment 3 -->
+                    <div class="card">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <div class="card-text">
+                            <h4>03. Go-Back-N ARQ</h4>
+                            <p>Implementation of sliding window pipelining, cumulative acknowledgments, and window efficiency (η) calculations.</p>
+                        </div>
+                    </div>
+                    <!-- Experiment 4 -->
+                    <div class="card">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <div class="card-text">
+                            <h4>04. Network Topology Builder</h4>
+                            <p>Drag-and-drop sandbox environment for designing Star, Mesh, Bus, and Ring geometries with built-in rule validation engines.</p>
+                        </div>
+                    </div>
+                    <!-- Experiment 5 -->
+                    <div class="card" style="grid-column: span 2;">
+                        <i class="fa-solid fa-server"></i>
+                        <div class="card-text">
+                            <h4>05. Client-Server Architecture (2-Tier & 3-Tier)</h4>
+                            <p>A comparative simulation of network architectural models, demonstrating middleware logic, database isolation, and transactional data flow between Presentation and Data tiers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEARNING METHODOLOGY -->
+            <div class="section">
+                <div class="section-title"><i class="fa-solid fa-rotate"></i> Learning Methodology</div>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <i class="fa-solid fa-book"></i>
+                        <h5>1. Theory Phase</h5>
+                        <p>Conceptual deep-dives with OSI Layer mapping.</p>
+                    </div>
+                    <div class="flow-step">
+                        <i class="fa-solid fa-play-circle"></i>
+                        <h5>2. Simulation Phase</h5>
+                        <p>Real-time interactions and protocol execution.</p>
+                    </div>
+                    <div class="flow-step">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        <h5>3. Assessment Phase</h5>
+                        <p>Instant scoring quizzes for result validation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CORE CN ELEMENTS -->
+            <div class="section">
+                <div class="section-title"><i class="fa-solid fa-gears"></i> Core CN Elements Covered</div>
+                <div class="elements-container">
+                    <div class="element-pill"><i class="fa-solid fa-circle-nodes"></i>OSI Reference Model</div>
+                    <div class="element-pill"><i class="fa-solid fa-shield-halved"></i>Error Control</div>
+                    <div class="element-pill"><i class="fa-solid fa-bolt"></i>Flow Control</div>
+                    <div class="element-pill"><i class="fa-solid fa-draw-polygon"></i>Network Geometry</div>
+                    <div class="element-pill"><i class="fa-solid fa-database"></i>Middleware Tier Isolation</div>
+                    <div class="element-pill"><i class="fa-solid fa-signal"></i>Digital Signaling</div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER: Viva | Team | QR -->
+        <footer class="footer-section">
+            
+            <!-- Viva Deliverables -->
+            <div class="viva-block">
+                <h4>Info</h4>
+                <ul>
+                    <li><strong>Institute:</strong> VIT, Wadala</li>
+                    <li><strong>Course:</strong> Computer Networks</li>
+                    <li><strong>Department:</strong> EXCS</li>
+                    <li><strong>Division:</strong> B</li>
+                </ul>
+            </div>
+
+            <!-- Team Members -->
+            <div class="team-block">
+                <h4>Development Team</h4>
+                <div class="team-grid">
+                    <div class="member-mini">
+                        <strong>Jainam Jain</strong>
+                        <span>Roll: 23108B0084</span>
+                    </div>
+                    <div class="member-mini">
+                        <strong>Dhanush Chowke</strong>
+                        <span>Roll: 23108B008o</span>
+                    </div>
+                    <div class="member-mini">
+                        <strong>Aditya Tambe</strong>
+                        <span>Roll: 23108B0077</span>
+                    </div>
+                    <div class="member-mini">
+                        <strong>Vrushan Patil</strong>
+                        <span>Roll: 23108B0079</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Portfolio QR -->
+            <div class="qr-block">
+                <img src="cn_qr.png" alt="QR code"></img>
+                <span class="qr-label">Project Portfolio</span>
+            </div>
+
+        </footer>
+    </div>
+
+</body>
+</html>

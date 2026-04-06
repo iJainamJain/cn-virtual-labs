@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Network Virtual Lab | VIT</title>
+    <!-- Linking to the updated style.css which contains the new animation keyframes -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Landing Page: Initial entry point for students -->
+    <div id="landing-page" class="landing-overlay">
+        <div class="landing-content">
+            <div class="inst-logo-placeholder" style="color: var(--accent); font-size: 1.2rem; font-weight: bold; margin-bottom: 10px;">VIT WADALA</div>
+            <h1>Computer Network Virtual Lab</h1>
+            <p>An Initiative of Vidyalankar Institute of Technology, Wadala.</p>
+            <div style="margin-top: 30px;">
+                <button class="enter-btn" onclick="enterLab()">Enter Laboratory</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Laboratory Interface -->
+    <div id="main-lab" class="hidden">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="brand-section">
+                    <span class="inst-name">Vidyalankar Institute of Technology</span>
+                    <span class="dept-name">Department of Electronics and Computer Science.</span>
+                </div>
+                <div class="title-section">
+                    <h1>Computer Network Virtual Lab</h1>
+                    <div class="header-line"></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Sidebar Navigation: Controlled by loadContent() in main.js -->
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li id="nav-home" class="active" onclick="loadContent('home')">
+                            <span class="nav-icon">🏠</span> Home / Experiments
+                        </li>
+                        <li id="nav-objective" onclick="loadContent('objective')">
+                            <span class="nav-icon">🎯</span> Lab Objective
+                        </li>
+                        <li id="nav-target" onclick="loadContent('target')">
+                            <span class="nav-icon">👥</span> Target Audience
+                        </li>
+                        <li id="nav-feedback" onclick="loadContent('feedback')">
+                            <span class="nav-icon">💬</span> Feedback
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Display Area: Experiment content is injected here -->
+            <main class="content-area" id="main-content">
+                <!-- Content generated dynamically by main.js -->
+            </main>
+        </div>
+
+        <!-- Professional Footer -->
+        <footer class="main-footer">
+            <p>&copy; 2024-2026 Computer Network Virtual Lab | Vidyalankar Institute of Technology, Wadala</p>
+        </footer>
+    </div>
+
+    <!-- Script Loading Order: Logic modules must load before the main router -->
+    
+    <!-- Layer 1: Experiment Modules -->
+    <script src="js/device-simulation.js"></script>
+    <script src="js/routing-simulation.js"></script>
+    <script src="js/line-encoding.js"></script>
+    <script src="js/arq-simulation.js"></script>
+    <script src="js/topology-simulation.js"></script>
+    <script src="js/gbn-simulation.js"></script>
+    <script src="js/client-server-simulation.js"></script>
+    
+    <!-- Experiment 6: The Multi-Protocol Heterogeneous Routing Module -->
+    <script src="js/multiprotocol-simulation.js"></script>
+    
+    <!-- Layer 2: Main Application Logic & Routing -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
